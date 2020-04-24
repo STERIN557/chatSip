@@ -114,8 +114,10 @@ main{
     display: flex;
     position: relative;
     flex-direction: column;
+    
    
     height: 70%;
+    width: 100%;
   
     overflow-x: hidden;
     overflow-y: scroll;
@@ -127,38 +129,49 @@ main{
     
 }
 .receiver{
-    display: flex;
+
     position: relative;
-     height: fit-content;
-     width: fit-content;
+   
      margin:1rem;
      margin-left: .5rem;
      padding: 1rem;
     font-size: 16px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.137);
+   
       
    
     border-radius: 0px 50px 50px 50px;
     color: rgb(68, 67, 71);
     font-family: Arial, Helvetica, sans-serif;
+    height: auto;
+    width: fit-content;
 }
 
 .sender{
-    display: flex;
+ 
     position: relative;
    
-     height: fit-content;
-     width: fit-content;
-     margin-left: .5rem;
-     padding: 1rem;
-    font-size: 16px;
-    background-color:rgb(255, 255, 255);
-    box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.137);
+    margin:1rem;
+    margin-left: .5rem;
+    padding: 1rem;
+   font-size: 16px;
+   background-color: rgb(255, 255, 255);
+   box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.137);
   
-   padding-left: 1.5rem;
-    border-radius: 50px 0px 50px 50px;
-    color:   rgb(68, 67, 71);
-    font-family: Arial, Helvetica, sans-serif;
+     align-self: flex-end;
+  
+   border-radius: 50px 0px 50px 50px;
+   color: rgb(68, 67, 71);
+   font-family: Arial, Helvetica, sans-serif;
+   height: auto;
+   width: fit-content;
+    
+}
+
+.inside{
+    display:inline-block;
+    position: relative;
+   
     
 }
