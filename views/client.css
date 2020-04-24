@@ -135,12 +135,13 @@ main{
      margin-left: .5rem;
      padding: 1rem;
     font-size: 16px;
-    background-color: orangered;
+    background-color: rgb(255, 255, 255);
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.137);
       
    
     border-radius: 0px 50px 50px 50px;
-    color: rgb(255, 255, 255);
+    color: rgb(68, 67, 71);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .sender{
@@ -152,11 +153,12 @@ main{
      margin-left: .5rem;
      padding: 1rem;
     font-size: 16px;
-    background-color:dodgerblue;
+    background-color:rgb(255, 255, 255);
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.137);
   
-   
+   padding-left: 1.5rem;
     border-radius: 50px 0px 50px 50px;
-    color: rgb(255, 255, 255);
+    color:   rgb(68, 67, 71);
+    font-family: Arial, Helvetica, sans-serif;
     
 }
