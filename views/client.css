@@ -20,7 +20,7 @@ html{
    
 }
 header{
-    display:flex;
+    display:block;
     position: fixed;
     width: 100%;
     height: 5rem;
@@ -35,11 +35,16 @@ header{
     z-index: 1;
 
 }
+body{
+    display: flex;
+    position: relative;
+    width: 100%;
+}
 ::-webkit-scrollbar{
     display: none;
 }
 footer{
-    display: flex;
+    display: block;
     position: fixed;
     height: 10rem;
     width:100%;
@@ -51,7 +56,7 @@ footer{
 }
 
 #m{
-    display: flex;
+    display: block;
     position: absolute;
     height:7rem;
     width:70%;
@@ -88,24 +93,34 @@ footer{
   outline-style: none;
     cursor: pointer;
     margin-left: 1rem;
+  
     margin-right: 1rem;
     
     
  
 
 }
+#snd img{
+    display: block;
+    position: absolute;
+    height: 3.5rem;
+    width: 3.5rem;
+    top:1.7rem;
+    left: 2.2rem;
+}
 
 main{
-    display: flex;
-    flex-direction: column;
+    display: block;
     position: relative;
-    width: 155%;
-    height: 90%;
+    width: 200%;
+    height: 80%;
     font-size: 20px;
     overflow-x: hidden;
     overflow-y: scroll;
-    background-color: red;
+     
     top:10rem;
+  
+    
 }
 .receiver{
     display: block;
@@ -114,7 +129,7 @@ main{
     max-width: 25rem;
      height: fit-content;
      width: fit-content;
-
+    font-size: 14px;
     background-color: hsl(207, 100%, 56%);
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.274);
     margin: 2rem;
@@ -124,23 +139,20 @@ main{
 }
 
 .sender{
-
     display: block;
     position: relative;
-     min-height: 5rem;
-     min-width: 5rem;
+    min-width: 20rem;
+    max-width: 25rem;
      height: fit-content;
      width: fit-content;
-   
+    font-size: 14px;
     background-color: hsl(207, 100%, 56%);
     box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.274);
     margin: 2rem;
     padding:1rem;
     border-radius: 10px;
     color: rgb(255, 255, 255);
-     left:30%;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
+    left:50%;
+
 
 }
