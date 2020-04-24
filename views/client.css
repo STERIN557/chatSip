@@ -113,12 +113,14 @@ main{
     display: block;
     position: relative;
     width: 200%;
-    height: 80%;
+    height: 70%;
     font-size: 20px;
     overflow-x: hidden;
     overflow-y: scroll;
      
-    top:10rem;
+    margin-top: 10rem;
+    padding-bottom:5rem;
+    padding-top: 5rem;
   
     
 }
