@@ -1,25 +1,46 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>ChatPrivate</title>
     
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
+   <link rel="stylesheet" href="./views/client.css">
   </head>
   <body>
+
+<!-- 
+
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    </form> -->
 
+    <header>
+      ChatPrivate
+    </header>
+
+
+    <main>
+
+<div class="receiver">
+ 
+  some message is there
+
+</div>
+
+<div class="sender">
+
+  yes some message is indeed here
+
+
+</div>
+
+    </main>
+
+    <footer>
+      <form action="">
+        <input type="text" id="m" autocomplete="off"> <input type="submit" id="snd" value="send">
+      </form>
+    </footer>
 
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
