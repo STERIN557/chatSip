@@ -22,9 +22,9 @@ const bodyParser = require('body-parser');
 
 
 
-app.use(express.static('./'))
+app.use(express.static(path.join(__dirname,"./")));
 
-app.set('views', (__dirname, './views/'));
+app.set('views', (__dirname, './'));
 app.set('view engine', 'ejs');
 
 
@@ -36,12 +36,6 @@ app.use(bodyParser.urlencoded({
  
  app.use(bodyParser.json());
 
-
-app.get('/login',(req,res)=>{
-
-    res.render('index');
-
-});
 
 
 // socket part lets do this
@@ -65,19 +59,30 @@ io.on('connection', (socket)=>{
 
 
 
-app.get('/',(req, res)=>{
+app.get('/main',(req, res)=>{
+
     res.sendFile(__dirname+'/index.htm');
 
-
+  
    
 })
 
 
+app.get('/',(req,res)=>{
 
+    res.render('index');
 
-app.post('/?username=:user&password=:pass',(req, res)=>{
-    res.send(req.body);
+});
+
+app.post('/',(req, res)=>{
+    console.log(req.body);
+    res.redirect('/main');
 })
+
+
+
+
+
 
 
 
