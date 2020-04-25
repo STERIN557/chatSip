@@ -56,9 +56,32 @@ app.post('/main',(req, res)=>{
     pass = req.body.password;
     roomNO = req.body.roomNO;
 
+    if((username===''||username==='undefined'|| username===null))
+    {
+     res.redirect('/');
+
+    }
+    else if((pass===''||pass==='undefined'|| pass===null))
+    {
+     
+        res.redirect('/');
+
+    }
+    else if((roomNO===''||roomNO==='undefined'|| roomNO===null))
+    {
+     
+          res.redirect('/');
+    }
+    else{
+
+
+
+        res.render('index');
+    }
+
    
   
-    res.render('index');
+
  
    
 });
