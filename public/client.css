@@ -175,3 +175,12 @@ main{
     /* something that i wanted to say */
     
 }
+#userName{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: green;
+    top:-.4rem;
+}

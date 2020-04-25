@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 
 
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false,
  }));
  
  
@@ -40,46 +40,76 @@ app.use(bodyParser.urlencoded({
 
 // socket part lets do this
 
-io.on('connection', (socket)=>{
-    console.log('user is connected');
-    socket.on('disconnect',()=>{
-        console.log('user disconnected')
-
-    });
-    socket.on('chat message',(msg)=>{
-        console.log(msg);
-        io.emit('chat message', msg);
-    });
-  
-})
 
 
 
 
 
-
-
-app.get('/main',(req, res)=>{
-
-    res.sendFile(__dirname+'/index.htm');
+var username = '';
+var pass = '';
+var roomNO = '';
+app.post('/main',(req, res)=>{
 
   
+    
+    username = req.body.username;
+    pass = req.body.password;
+    roomNO = req.body.roomNO;
+
    
-})
+  
+    res.render('index');
+ 
+   
+});
+
+
+// io.on('connection', (socket)=>{
+//     console.log('user is connected');
+//     socket.on('disconnect',()=>{
+//         console.log('user disconnected')
+
+//     });
+   
+//     socket.on('chat message',(msg)=>{
+//                 console.log(msg);
+//         io.emit('chat message', msg);
+        
+//     });
+    
+//     //above code will broadcastly send data to everyone
+//     // below cocde is for individual for some join stuff
+
+//     socket.emit('user',username);
+
+// })
+
+io.on('connection', (socket)=>{
+
+  
+
+  socket.join(roomNO);
+
+  socket.on('chat message',(msg)=>{
+      io.to(roomNO).emit('chat message', {msg, id:socket.id, username});
+  })
+
+//   io.to(roomNO).emit('chat ', socket.id);
+
+
+});
+
+
+
+
+
 
 
 app.get('/',(req,res)=>{
 
-    res.render('index');
+    res.render('login');
 
 });
-
-app.post('/',(req, res)=>{
-    console.log(req.body);
-    res.redirect('/main');
-})
-
-
 
 
 
