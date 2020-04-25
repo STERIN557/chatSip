@@ -4,7 +4,7 @@
   "description": "my first backend with node and epress and may be soccket.io project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "sterin saji",
   "license": "ISC",
