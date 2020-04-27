@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatPrivate</title>
-    
+    <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
    <link rel="stylesheet" href="./public/client.css">
   </head>
   <body>
@@ -22,9 +22,11 @@
 
 
     <main>
+  <!-- <div class="messages">
+     user joined into the room no 12 and he is going there
+  </div> -->
 
 
-  
 
     </main>
 
@@ -35,34 +37,73 @@
     </footer>
 
 <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-<script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
+
 <script>
 
   var socket = io();
-  $(function(){
+  var user, room;
+ $(document).ready(()=>{
+
+   socket.on('cred',(msg)=>{
+     
+ let user = msg.username;
+ let room = msg.roomNO;
+        
+
+ socket.emit('join',{user, room});
+     
+socket.on('error',(er)=>{
+  alert(er);
+})
+ 
+
+socket.on('message',(message)=>{
+      
+    
+     $("main").append(`<div class="messages"> ${message}</div> `);
    
-    $('form').submit((e)=>{
-      e.preventDefault();
-      socket.emit('chat message',$('#m').val());
-      $('#m').val('');
-      return false;
 
-    });
-    socket.on('chat message',(msg)=>{
-    let message = msg.msg;
-    let id = msg.id;
-    let username = msg.username;
+})
 
-       $("main").append(`<div class="sender"><div class="inside"><div id="userName" >${username}</div>${message}</div></div>`);
-         
-       username='';
-    })
 
+socket.on('roomData',(room, users)=>{
+  console.log(room);
+  console.log('user are '+ users);
+});
+
+
+$("form").submit((e)=>{
+  e.preventDefault();
+
+  socket.emit('sendMessage',($("#m").val()));
+  $('#m').val('');
+
+  return false;
+
+})
+
+socket.on('messenger',  (mesngr)=>{
+
+     
+  console.log(mesngr);
+  
+  $("main").append(`<div class="sender"><div class="inside"><div id="userName" >${mesngr.user}</div>${mesngr.message}</div></div>`);
+
+
+})
+
+
+
+   });
+
+
+
+
+
+ });
   
 
-   
 
-  });
 
 
  
