@@ -115,6 +115,11 @@ socket.on('outgoing',({user, message})=>{
 
 })
 
+socket.on('connectionErr',(mgs)=>{
+  alert(msg);
+  window.location.replace('/');
+})
+
 
 
 
@@ -122,6 +127,7 @@ socket.on('outgoing',({user, message})=>{
 
  });
   
+
 
 
 

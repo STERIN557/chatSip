@@ -115,43 +115,53 @@ io.on('connection', (socket)=>{
     console.log(Add);
 
 
-    socket.join(Add.room);
+    if(Add.room)
+    {
+        socket.join(Add.room);
     
 
-  socket.to(Add.room).emit('cred', { id: Add.id, name:Add.name, room:Add.room});
-
-
-
-
-
-   socket.on('sendMessage', ({id, message})=>{
-    //    room = getUser(id);
-    //    console.log(room.room);
-
-       console.log(getUser(id).room);
-
-       user = getUser(id).user;
-       room  = getUser(id).room;
+        socket.to(Add.room).emit('cred', { id: Add.id, name:Add.name, room:Add.room});
       
-       socket.emit('incoming',{user, message});
-       
-      socket.to(room).emit('outgoing',{user,message});
+      
+      
+      
+      
+         socket.on('sendMessage', ({id, message})=>{
+          //    room = getUser(id);
+          //    console.log(room.room);
+      
+             console.log(getUser(id).room);
+      
+             user = getUser(id).user;
+             room  = getUser(id).room;
+            
+             socket.emit('incoming',{user, message});
+      
+            socket.to(room).emit('outgoing',{user,message});
+      
+      
+      
+          //    socket.to()
+      
+      
+         })
+      
+         
+             
+      
+          socket.on('disconnect',()=>{
+              const user = removeUser(socket.id);
+              io.to(user.room).emit('roomData',{room: user.room, users: getUsersInRoom(user.room)});
+      
+          })
 
+    }
+    else{
 
+        socket.emit('connectionErr','connection error please retry again!!!');
 
-    //    socket.to()
-
-
-   })
-
+    }
    
-       
-
-    socket.on('disconnect',()=>{
-        const user = removeUser(socket.id);
-        io.to(user.room).emit('roomData',{room: user.room, users: getUsersInRoom(user.room)});
-
-    })
 
    
    
