@@ -19,7 +19,7 @@ const mime = require('mime');
 
 const bodyParser = require('body-parser');
 
-const { addUser, removeUser, getUser, getUserInRoom} = require('./handle');
+const { addUser, removeUser, getUser, getUsersInRoom} = require('./handle');
 
 
 app.use(express.static(path.join(__dirname,"./")));
@@ -51,8 +51,8 @@ app.post('/main',(req, res)=>{
 
 
     username = req.body.username;
-    pass = req.body.password;
-    roomNO = req.body.roomNO;
+  
+    room = req.body.roomNO;
 
        
 
@@ -61,13 +61,7 @@ app.post('/main',(req, res)=>{
          res.redirect('/');
     
         }
-        else if((pass===''||pass==='undefined'|| pass===null))
-        {
-         
-            res.redirect('/');
-    
-        }
-        else if((roomNO===''||roomNO==='undefined'|| roomNO===null))
+        else if((room===''||room==='undefined'|| room===null))
         {
          
               res.redirect('/');
@@ -103,74 +97,68 @@ app.post('/main',(req, res)=>{
 
 
 io.on('connection', (socket)=>{
-            
-    socket.emit('cred', {username, roomNO});
 
-      
-    
+       console.log('username before addUser is '+username + 'room no is '+room);
+
+    const {Add , error }  =  addUser({id: socket.id, name: username, room: room});
+
+    if(error=='taken')
+    {
+       socket.emit('taken','usernametaken');
+    }
+    else if(error=='nouser')
+    {
+       socket.emit('nouser','nouser');
+    }
      
-    socket.on('join',(userinfo)=>{
-        
-
-        const { userInfo, error} = addUser({id: socket.id, user: userinfo.user, room: userinfo.room});
-
-        if(!error)
-        {
-            // do nothing
+    console.log('username after addUser is '+username + 'room no is '+room);
+    console.log(Add);
 
 
-            socket.join(userInfo.room);
-
-            socket.emit('message',`${userInfo.user} , welcome to room ${userInfo.room}`);
-            socket.broadcast.to(userInfo.room).emit('message', `${userInfo.user } has joined!`);
-      
-            io.to(userInfo.room).emit('roomData',{room:userInfo.room, users:getUsersInRoom(userInfo.room)});
-
-
-
-
-
-
-
-    socket.on('sendMessage', (message)=>{
-        const user = getUser(socket.id);
-        console.log(message);
-        console.log(user)
-  
-
-        io.to(user.room).emit('messenger',{user:user.user,message});
+    socket.join(Add.room);
     
+
+  socket.to(Add.room).emit('cred', { id: Add.id, name:Add.name, room:Add.room});
+
+
+
+
+
+   socket.on('sendMessage', ({id, message})=>{
+    //    room = getUser(id);
+    //    console.log(room.room);
+
+       console.log(getUser(id));
+
+    //    socket.to()
+
+
+   })
        
-    
-    });
 
-    // socket.on('disconnect',()=>{
-    //     const user = removeUser(socket.id);
-
-    //     if(user){
-    //         io.to(user.room).emit('message',{user:'admin', text: `${user.name} has left the Chat`});
-    //         io.to(user.room).emit('roomData',{room: user.room, users: getUserInRoom(user.room)});
-    //     }
-    // })
-       
-       
-        }
-        else{
-
-            app.get('/notfound',(req,res)=>{
-                res.send("not found");
-            })
-
-        }
-
-
-        
-    
-        
-
-       
+    socket.on('disconnect',()=>{
+        const user = removeUser(socket.id);
+        io.to(user.room).emit('roomData',{room: user.room, users: getUsersInRoom(user.room)});
 
     })
+
+   
+   
+
+ 
+  
+
+
+
+  
+
+
+
+
+
+
+
+
 
    
 
@@ -180,43 +168,10 @@ io.on('connection', (socket)=>{
 
 
 
-    // socket.on('join', ( {userName,room}, callback)=>{
-
-    //     console.log('inside join '+  userName);
 
 
 
-    //     const { error , user } = addUser({id: socket.id, username, roomNO});
-    //     if(error) return callback(error);
-
-    //   socket.join(user.roomNO);
-    //   socket.emit('message',{user: 'admin', text: `${user.name} , welcome to room ${user.room}` });
-    //   socket.broadcast.to(user.room).emit('message',{user: 'admin', text: `${user.name } has joined!`});
-
-    //   io.to(user.room).emit('roomData',{room:user.room, users:getUsersInRoom(user.room)});
-
-    //    callback();
-    // });
-
-
-    // socket.on('sendMessage', (message, callback)=>{
-    //     const user = getUser(socket.id);
-    //     io.to(user.room).emit('message',{user: user.name, text: message});
-    
-    //     callback();
-    
-    // });
-
-    // socket.on('disconnect',()=>{
-    //     const user = removeUser(socket.id);
-
-    //     if(user){
-    //         io.to(user.room).emit('message',{user:'admin', text: `${user.name} has left the Chat`});
-    //         io.to(user.room).emit('roomData',{room: user.room, users: getUserInRoom(user.room)});
-    //     }
-    // })
-
-
+ 
 
 
 

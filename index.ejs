@@ -41,18 +41,40 @@
   var user, room;
  $(document).ready(()=>{
 
+    socket.on('taken',(msg)=>{
+
+
+     alert("Username and room already taken");
+     window.location.replace('/');
+
+
+    })
+
+    socket.on('nouser',(msg)=>{
+
+      alert("Username and room cannot be empty");
+      window.location.replace('/');
+
+    })
+
+
+
    socket.on('cred',(msg)=>{
      
- let user = msg.username;
- let room = msg.roomNO;
+ let user = msg.name;
+ let room = msg.room;
+ let id  = msg.id;
+
+
+
+
+ $("main").append(`<div class="messages"> ${user} has joined </div> `);
+ 
         
 
- socket.emit('join',{user, room});
-     
-socket.on('error',(er)=>{
-  alert(er);
-})
  
+     
+
 
 socket.on('message',(message)=>{
       
@@ -72,12 +94,12 @@ socket.on('roomData',(room, users)=>{
 $("form").submit((e)=>{
   e.preventDefault();
 
-  socket.emit('sendMessage',($("#m").val()));
+  socket.emit('sendMessage',{id: socket.id, message: $("#m").val()});
   $('#m').val('');
 
   return false;
 
-})
+});
 
 socket.on('messenger',  (mesngr)=>{
 
