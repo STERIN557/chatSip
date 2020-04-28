@@ -44,8 +44,8 @@ app.use(bodyParser.urlencoded({
 
 
 var username = '';
-var pass = '';
-var roomNO = '';
+
+var room = '';
 
 app.post('/main',(req, res)=>{
 
@@ -98,7 +98,16 @@ app.post('/main',(req, res)=>{
 
 io.on('connection', (socket)=>{
 
-       console.log('username before addUser is '+username + 'room no is '+room);
+    if(username=="undefined"||username==null|| username==='' || room=="undefined"||room==null|| room==='' )
+    {
+
+        socket.emit('connectionErr','connection error please retry again!!!');
+
+    }else{
+
+
+
+        console.log('username before addUser is '+username + 'room no is '+room);
 
     const {Add , error }  =  addUser({id: socket.id, name: username, room: room});
 
@@ -115,7 +124,7 @@ io.on('connection', (socket)=>{
     console.log(Add);
 
 
-    if(Add.room)
+    if(Add != "undefined"|| Add!=null)
     {
         socket.join(Add.room);
     
@@ -132,8 +141,11 @@ io.on('connection', (socket)=>{
       
              console.log(getUser(id).room);
       
-             user = getUser(id).user;
+             user = getUser(id).name;
              room  = getUser(id).room;
+
+
+             
             
              socket.emit('incoming',{user, message});
       
@@ -161,27 +173,10 @@ io.on('connection', (socket)=>{
         socket.emit('connectionErr','connection error please retry again!!!');
 
     }
-   
 
-   
-   
+        
+    }
 
- 
-  
-
-
-
-  
-
-
-
-
-
-
-
-
-
-   
 
 
 });
