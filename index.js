@@ -128,12 +128,23 @@ io.on('connection', (socket)=>{
     //    room = getUser(id);
     //    console.log(room.room);
 
-       console.log(getUser(id));
+       console.log(getUser(id).room);
+
+       user = getUser(id).user;
+       room  = getUser(id).room;
+      
+       socket.emit('incoming',{user, message});
+       
+      socket.to(room).emit('outgoing',{user,message});
+
+
 
     //    socket.to()
 
 
    })
+
+   
        
 
     socket.on('disconnect',()=>{

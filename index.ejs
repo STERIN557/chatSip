@@ -28,7 +28,7 @@
     </main>
 
     <footer>
-      <form action="">
+      <form >
         <input type="text" id="m" autocomplete="off"> <button id="snd"><img src="./public/images/iconsubmit.png" ></button>
       </form>
     </footer>
@@ -70,50 +70,51 @@
 
  $("main").append(`<div class="messages"> ${user} has joined </div> `);
  
-        
+   });
 
- 
-     
+
+   $("form").submit((e)=>{
+    e.preventDefault();
+  
+    socket.emit('sendMessage',{id: socket.id, message: $("#m").val()});
+    $('#m').val('');
+  
+    return false;
+  
+  });
+
 
 
 socket.on('message',(message)=>{
       
     
-     $("main").append(`<div class="messages"> ${message}</div> `);
-   
+  $("main").append(`<div class="messages"> ${message}</div> `);
+
 
 })
 
 
 socket.on('roomData',(room, users)=>{
-  console.log(room);
-  console.log('user are '+ users);
+console.log(room);
+console.log('user are '+ users);
 });
 
-
-$("form").submit((e)=>{
-  e.preventDefault();
-
-  socket.emit('sendMessage',{id: socket.id, message: $("#m").val()});
-  $('#m').val('');
-
-  return false;
-
-});
-
-socket.on('messenger',  (mesngr)=>{
+socket.on('incoming',  ({user, message})=>{
 
      
-  console.log(mesngr);
   
-  $("main").append(`<div class="sender"><div class="inside"><div id="userName" >${mesngr.user}</div>${mesngr.message}</div></div>`);
+  $("main").append(`<div class="sender"><div class="inside"><div id="userName" >${user}</div>${message}</div></div>`);
 
 
 })
+socket.on('outgoing',({user, message})=>{
 
 
+  
+  $("main").append(`<div class="receiver"><div class="inside"><div id="userName" >${user}</div>${message}</div></div>`);
 
-   });
+})
+
 
 
 
