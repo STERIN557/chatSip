@@ -125,8 +125,11 @@ io.on('connection', (socket)=>{
 
 
     if(Add != "undefined"|| Add!=null)
-    {
-        socket.join(Add.room);
+    {    
+
+        let roomVar = Add.room;
+
+        socket.join(roomVar);
     
 
         socket.to(Add.room).emit('cred', { id: Add.id, name:Add.name, room:Add.room});
